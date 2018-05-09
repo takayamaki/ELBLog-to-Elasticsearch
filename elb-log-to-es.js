@@ -120,33 +120,33 @@ function convertTimezone(str, offset, format = "YYYY-MM-DDTHH:mm:SSOOOOOO"){
     const min = pad(dst.getMinutes());
     const sec = pad(dst.getSeconds());
 
-    let offset_str;
-    let offset_hour;
-    let offset_min;
+    let offsetStr;
+    let offsetHour;
+    let offsetMin;
     if (offset > 0){
-        offset_hour = `${pad(Math.floor(offset))}`;
+        offsetHour = `${pad(Math.floor(offset))}`;
 
-        offset_min = String(offset).split(".")[1];
-        if (offset_min){
-            offset_min = 6 * offset_min / 10;
+        offsetMin = String(offset).split(".")[1];
+        if (offsetMin){
+            offsetMin = 6 * offsetMin / 10;
         }else{
-            offset_min ="00"
+            offsetMin ="00"
         }
 
-        offset_str = `+${offset_hour}:${offset_min}`;
+        offsetStr = `+${offsetHour}:${offsetMin}`;
     }else if(offset === 0){
-        offset_str = 'Z';
+        offsetStr = 'Z';
     }else if(offset < 0){
-        offset_hour = `${pad(Math.floor(-offset))}`;
+        offsetHour = `${pad(Math.floor(-offset))}`;
 
-        offset_min = String(offset).split(".")[1];
-        if (offset_min){
-            offset_min = 6 * offset_min / 10;
+        offsetMin = String(offset).split(".")[1];
+        if (offsetMin){
+            offsetMin = 6 * offsetMin / 10;
         }else{
-            offset_min ="00"
+            offsetMin ="00"
         }
 
-        offset_str = `-${offset_hour}:${offset_min}`;
+        offsetStr = `-${offsetHour}:${offsetMin}`;
     }else{
         return null;
     }
@@ -157,7 +157,7 @@ function convertTimezone(str, offset, format = "YYYY-MM-DDTHH:mm:SSOOOOOO"){
     result = result.replace(/HH/,hour);
     result = result.replace(/mm/,min);
     result = result.replace(/SS/,sec);
-    result = result.replace(/OOOOOO/,offset_str);
+    result = result.replace(/OOOOOO/,offsetStr);
     return result;
 }
 
@@ -167,24 +167,24 @@ function parseALBLog(line){
     const parsedLog = {
         'scheme': splited[0],
         'time': convertTimezone(splited[1],config.timeoffset),
-        'ELBName': splited[2],
+        'elbName': splited[2],
         'srcIP': splited[3].split(':')[0],
-        'serviceServer': splited[4],
+        'target': splited[4],
         'requestProcessingTime': Number(splited[5]),
-        'serviceServerProcessingTime': Number(splited[6]),
+        'targetProcessingTime': Number(splited[6]),
         'responseProcessingTime': Number(splited[7]),
         'elbStatusCode': Number(splited[8]),
-        'serviceServerStatusCode': Number(splited[9]),
+        'targetStatusCode': Number(splited[9]),
         'receivedBytes': Number(splited[10]),
         'sentBytes': Number(splited[11]),
         'requestPath': splited[12],
         'userAgent': splited[13],
-        'ssl_cipher': splited[14],
-        'ssl_protocol': splited[15],
-        'target_group_arn': splited[16],
-        'trace_id': splited[17],
-        'domain_name': splited[18],
-        'chosen_cert_arn': splited[19]
+        'sslCipher': splited[14],
+        'sslProtocol': splited[15],
+        'targetGroupArn': splited[16],
+        'traceID': splited[17],
+        'domainName': splited[18],
+        'chosenCertArn': splited[19]
     };
     return parsedLog;
 }
