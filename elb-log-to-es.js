@@ -38,7 +38,7 @@ function s3LogsToES(context, bucket, key, unzipStream, lineStream, recordStream)
 function postDocumentToES(doc, context) {
     const req = new AWS.HttpRequest(endpoint);
     
-    indexName = `${config.index}-${convertTimezone(new Date(),9,"YYYYMM")}`;
+    indexName = `${config.index}-${convertTimezone(new Date(),config.timeoffset,"YYYYMM")}`;
 
     req.method = 'POST';
     req.path = path.join('/', indexName, config.doctype);
