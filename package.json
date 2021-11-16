@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "aws-sdk": "^2.149.0",
+    "aws-sdk": "^2.814.0",
     "byline": "^5.0.0",
     "path": "^0.12.7",
     "stream": "^0.0.2"
